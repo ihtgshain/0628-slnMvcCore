@@ -1,0 +1,73 @@
+﻿@model IEnumerable<prjMvcCore.Models.TProduct>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>產品一覽</h1>
+@using (Html.BeginForm())
+{
+    @:關鍵字 @Html.TextBox("txtKeyword")
+    <input type="submit" value="查詢" />
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">新增</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                序號
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FQty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FImagePath)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @(++count)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FCost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FQty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FPrice)
+                    </td>
+                    <td>
+                        <img src="~/Images/@item.FImagePath" width="200" height="150" />
+                    </td>
+                    <td>
+                        @Html.ActionLink("修改", "Edit", new { id = item.FId }, new { @class = "btn btn-success" }) |
+                        @Html.ActionLink("刪除", "Delete", new { id = item.FId }, new { onclick = "return confirm('確認刪除?')", @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
